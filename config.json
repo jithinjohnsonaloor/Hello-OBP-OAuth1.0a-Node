@@ -1,0 +1,6 @@
+{
+"apiHost": "https://apisandbox.openbankproject.com",
+"consumerKey": "kn5wosd0pc5eheog2ljsdb2iyunlhgpzwicrs0to",
+"consumerSecret" : "th5yoskzzw25ru32d0tqis4ji05v1lfncssx0lco",
+"redirectUrl": "http://127.0.0.1:8085/callback"
+}

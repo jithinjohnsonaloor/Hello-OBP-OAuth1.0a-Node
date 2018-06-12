@@ -85,6 +85,7 @@ app.use(session({
 
 
 app.get('/connect', function(req, res){
+  console.log ("I am in /connect")
   consumer.getOAuthRequestToken(function(error, oauthToken, oauthTokenSecret, results){
     if (error) {
       res.status(500).send("Error getting OAuth request token : " + util.inspect(error));
@@ -98,6 +99,7 @@ app.get('/connect', function(req, res){
 
 
 app.get('/callback', function(req, res){
+  console.log ("I am in /callback")
   consumer.getOAuthAccessToken(
     req.session.oauthRequestToken,
     req.session.oauthRequestTokenSecret,
@@ -118,7 +120,7 @@ app.get('/callback', function(req, res){
 
 
 app.get('/signed_in', function(req, res){
-
+  console.log ("I am in /signed_in")
   var template = "./template/signedIn.pug"
   var options = {}
   var html = pug.renderFile(template, options)
@@ -141,6 +143,18 @@ app.get('/getCurrentUser', function(req, res){
 
 app.get('/getMyAccounts', function(req, res){
   consumer.get(apiHost + "/obp/v2.1.0/my/accounts",
+  req.session.oauthAccessToken,
+  req.session.oauthAccessTokenSecret,
+  function (error, data, response) {
+      var parsedData = JSON.parse(data);
+      res.status(200).send(parsedData)
+  });
+});
+
+//GET my Account Details by passing BAnk Name and Acc. No(Hardcoded values for now:view has to be created;List of accounts)
+app.get('/getAccDetails', function(req, res){
+  console.log ("I am in /signed_in")
+  consumer.get(apiHost + "/obp/v3.0.0/my/banks/test-bank/accounts/jiAcc12345/account",
   req.session.oauthAccessToken,
   req.session.oauthAccessTokenSecret,
   function (error, data, response) {
